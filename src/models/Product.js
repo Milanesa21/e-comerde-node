@@ -1,13 +1,36 @@
-import {model, Schema} from 'mongooses';
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../db/database.js";
 
-const ProductSchema = new Schema({
-    name: String,
-    description: String,
-    price: Number,
-    category: String,
-    stock: Number,
+class Product extends Model {}
+
+Product.init ({
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    price: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+    },
+    description: {
+        type: DataTypes.STRING,
+    },
+    category: {
+        type: DataTypes.STRING,
+    },
+    stock: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+    },
+    avaliable: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+    }
+
 }, {
-    timestamps: true,
+    sequelize,
+    modelName: 'Product',
+    tableName: 'products',
 });
 
-export default model('products', ProductSchema)
+export default Product;
